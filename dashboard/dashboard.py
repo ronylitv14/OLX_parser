@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 # Importing necessary modules for data retrieval and preprocessing
 from utils.market_data_preprocessing import (
     get_data,
+    get_query_names,
     preprocess_data,
     InvalidAuthData,
     CATEGORIES
@@ -53,8 +54,8 @@ with st.form("my_form"):
     btn_submit = st.form_submit_button("Submit")
 
 # Data retrieval and visualization if the form is submitted
-try:
-    if btn_submit:
+if btn_submit:
+    try:
         token_data = requests.request(
             method="POST",
             url=f"{DATA_API_DOMAIN}/token",
@@ -121,11 +122,11 @@ try:
         pie_chart.update_traces(textposition='inside')
         pie_chart.update_layout(uniformtext_minsize=12, uniformtext_mode='hide')
         st.write(pie_chart)
-except InvalidAuthData:
-    st.write("Auth data is invalid!")
+    except InvalidAuthData:
+        st.write("Auth data is invalid!")
 
-except requests.exceptions.HTTPError as err:
-    st.write(f"Something wrong with API connection!\n\nError: {err.response.json()}")
+    except requests.exceptions.HTTPError as err:
+        st.write(f"Something wrong with API connection!\n\nError: {err.response.json()}")
 
-except KeyError as err:
-    st.write(f"Wrong query name! Try again: {err}")
+    except KeyError as err:
+        st.write(f"Wrong query name!\n\nAll available queries are: {get_query_names(token_data)} ")

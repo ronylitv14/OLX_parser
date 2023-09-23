@@ -58,3 +58,24 @@ def preprocess_data(
         return market_df
     return market_df[
         (market_df["price"] >= price_from) & (market_df["price"] <= price_to) & (market_df["tags"] == category)]
+
+
+@st.cache_data
+def get_query_names(
+        token_data: Dict[str, str]
+):
+
+    token = token_data.get("token")
+    token_type = token_data.get("token_type")
+
+    if not (token and token_type):
+        raise InvalidAuthData
+
+    response = requests.get(
+        url=f"{DATA_API_DOMAIN}/api/v1/query-types",
+        headers={
+            "Authorization": f"{token_data['token_type'].title()} {token_data['token']}"
+        }
+    )
+
+    return response.json()
