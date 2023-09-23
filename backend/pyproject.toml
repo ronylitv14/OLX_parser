@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "olx-parser"
+version = "0.1.0"
+description = ""
+authors = ["ronylitv14 <litvinets.rostislav@kneu.ua>"]
+readme = "README.md"
+packages = [{include = "olx_parser"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.31.0"
+bs4 = "^0.0.1"
+sqlalchemy = "^2.0.17"
+alembic = "^1.11.1"
+python-dotenv = "^1.0.0"
+lxml = "^4.9.3"
+dateparser = "^1.1.8"
+fastapi = "^0.101.1"
+uvicorn = {extras = ["standard"], version = "^0.23.2"}
+pydantic = "^2.3.0"
+flower = "^2.0.1"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+python-multipart = "^0.0.6"
+celery = {extras = ["rabbitmq"], version = "^5.3.1"}
+redis = "^5.0.0"
+ruff = "^0.0.287"
+psycopg2 = "^2.9.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
