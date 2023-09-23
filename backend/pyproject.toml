@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["ronylitv14 <litvinets.rostislav@kneu.ua>"]
 readme = "README.md"
-packages = [{include = "olx_parser"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -25,7 +24,7 @@ python-multipart = "^0.0.6"
 celery = {extras = ["rabbitmq"], version = "^5.3.1"}
 redis = "^5.0.0"
 ruff = "^0.0.287"
-psycopg2 = "^2.9.7"
+psycopg2-binary = "^2.9.7"
 
 
 [build-system]

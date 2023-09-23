@@ -25,9 +25,8 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-.venv
-api/.ruff_cache
 MANIFEST
+./dashboard/dashboard_env/*
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -130,6 +129,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+dashboard_env/
 
 # Spyder project settings
 .spyderproject
@@ -160,5 +160,5 @@ cython_debug/
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
+.idea/
 

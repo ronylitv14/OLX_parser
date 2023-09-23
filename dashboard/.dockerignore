@@ -28,6 +28,7 @@ share/python-wheels/
 .venv
 api/.ruff_cache
 MANIFEST
+dashboard_env/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

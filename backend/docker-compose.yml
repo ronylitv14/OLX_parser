@@ -1,0 +1,71 @@
+version: "3.10"
+
+services:
+  web:
+    build: .
+    command: ["uvicorn", "api.main:olx_app", "--host", "0.0.0.0", "--port", "8080"]
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - redis_db
+      - celery_worker
+    env_file:
+      - ./.env
+#    environment:
+#      TOKEN_EXPIRATION_TIME: 30
+#      BROKER_URL: redis://redis_db:6379/0
+#      BACKEND_URL: redis://redis_db:6379/0
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#      POSTGRES_DB: olx_parser
+
+    volumes:
+      - .:/src/app
+
+  celery_worker:
+    build: .
+    command: celery -A celery_worker.worker:celery_app worker -l info
+    env_file:
+      - ./.env
+#    environment:
+#      BROKER_URL: redis://redis_db:6379/0
+#      BACKEND_URL: redis://redis_db:6379/0
+#      MAIN_URL: www.olx.ua
+#      PARSER: lxml
+#      SECRET_KEY: 5f8621ba825370f3654dd050177debd3725c4df28fc4ac99f0d9e77234e1cf2e
+#      ALGORITHM: HS256
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#      POSTGRES_DB: olx_parser
+    depends_on:
+      - db
+      - redis_db
+
+  db:
+    image: uselagoon/postgres-14-drupal
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: olx_parser
+    ports:
+      - "5432:5432"
+
+
+  redis_db:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_PORT: 6379
+      REDIS_DATABASES: 16
+
+  migrate:
+    build: .
+    restart: on-failure
+    command: ["alembic", "upgrade", "heads"]
+    depends_on:
+      - db
+
+
+
